@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Secret Santa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css" />
+</head>
+
+<body>
+    <div>
+        <form action="/roll" method="post">
+            <button class="btn striped-shadow white"><span>Roll</span></button>
+            <div class="radio">
+                <input type="radio" id="round_1" name="round" value="1" >
+                <label for="round_1">Round 1</label>
+                <input type="radio" id="round_2" name="round" value="2" >
+                <label for="round_2">Round 2</label>
+                <input type="radio" id="round_3" name="round" value="3" checked>
+                <label for="round_3">Round 3</label>
+            </div>
+        </form>
+        <form action="/action" method="post">
+            <button class="btn striped-shadow blue"><span>Action</span></button>
+        </form>
+        <form action="/rules" method="get">
+            <button class="btn striped-shadow dark"><span>Rules</span></button>
+        </form>
+    </div>
+    <div>
+
+        <div class="content">
+            <% if(roll == null && action == null){ %>
+            <h1 data-text="WELCOME TO OUR SECRET SANTA!">WELCOME TO OUR SECRET SANTA!</h1>
+            <% } %>
+            <% if(roll){ %>
+            <h1 data-text="You Rolled <%= roll %>">You Rolled
+                <%= roll %>
+            </h1>
+            <h1 data-text="">
+                <%= rollMessage %>
+            </h1>
+            <% } %>
+            <% if(action){ %>
+            <h1 data-text="">
+                <%= action %>
+            </h1>
+            <% } %>
+            <div class="content_star star-1"></div>
+            <div class="content_star star-2"></div>
+            <div class="content_star star-3"></div>
+            <div class="content_star star-4"></div>
+            <div class="content_star star-5"></div>
+            <div class="content_arrow-wrapper">
+                <img class="content_arrow" src="https://static.thenounproject.com/png/1563361-200.png">
+                <p class="content_arrow-cute">
+                    <%= randomSaying %>!</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
