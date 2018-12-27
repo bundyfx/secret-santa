@@ -1,18 +1,8 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Secret Santa</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css" />
-</head>
+<% include partials/head %>
+<link rel="stylesheet" type="text/css" media="screen" href="../assets/css/main.css" />
 
 <body>
     <div>
@@ -29,6 +19,14 @@
     <div id="roll-outcome">
     </div>
 
+    <div id="player-list">
+        <ul>
+        <% for(var i=0; i<playerList.length; i++) {%>
+            <li><%= playerList[i] %></li>
+        <% } %>    
+        </ul>
+    </div>
+
 </body>
 
 </html>
@@ -36,7 +34,7 @@
 <script src="assets/js/index.js"></script>
 <script>
     window.onload = ()=> {
-        const roomName = Cookies.get('room')
-        init(roomName);
+        const gameDetails = Cookies.get('gameDetails')
+        init(gameDetails);
       };
 </script>
