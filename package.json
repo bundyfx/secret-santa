@@ -11,7 +11,18 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "connect-session-sequelize": "^6.0.0",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^6.2.0",
     "ejs": "^2.6.1",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "pg": "^7.7.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.0",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^5.4.0"
   }
 }
