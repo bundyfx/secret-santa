@@ -2,31 +2,25 @@ const express = require('express');
 const { Game } = require('../models')
 const sequelize = require('sequelize');
 
-const routes = (io) => {
+const routes = () => {
     const gameRouter = express.Router();
 
     gameRouter.post('/', (req, res) => {
-        const { create, join } = req.query
+        const { create, join, leave } = req.query
         let { playerName, gameName } = req.body
 
         req.session.room = gameName
 
         if (create) {
-            // Set the session to be the room name (Will become some complex GUID)
-    
             Game.create({
                 name: gameName,
                 players: [playerName],
-                room: `/${gameName}` // (Will become some complex GUID)
+                room: `/${gameName}`
             }).then(() => {
-                res.cookie('gameDetails', JSON.stringify({ gameName: req.session.room, playerName: playerName })); // (Will become some complex GUID)
-                res.render('game', {
-                    namespace: req.session.room,
-                    playerList: []
+                res.json({
+                    gameName: req.session.room,
+                    playerList: [playerName]
                 });
-
-
-                return
             })
         }
         if (join) {
@@ -38,28 +32,32 @@ const routes = (io) => {
                 },
                 'returning': true
             }).then((data) => {
-                // The returned list of players in this room according to the DB
                 const playerList = data[1].map(gameInfo => gameInfo.dataValues.players).pop()
-
-                res.cookie('gameDetails', JSON.stringify({ gameName: req.session.room, playerName: playerName })); // (Will become some complex GUID)
-                const filteredPlayerList = playerList.filter(player => player != playerName)
-
-                res.render('game', {
-                    namespace: req.session.room,
-                    playerList: filteredPlayerList
+                // const filteredPlayerList = playerList.filter(player => player != playerName)
+                res.json({
+                    gameName: req.session.room,
+                    playerList: playerList
                 });
-
-                // Emit back to the client the current player-list (returned from db)
-                return
+            })
+        }
+        if (leave) {
+            Game.update({
+                'players': sequelize.fn('array_remove', sequelize.col('players'), playerName)
+            }, {
+                'where': {
+                    'name': gameName
+                },
+                'returning': true
+            }).then((data) => {
+                const playerList = data[1].map(gameInfo => gameInfo.dataValues.players).pop()
+                // const filteredPlayerList = playerList.filter(player => player != playerName)
+                res.json({
+                    gameName: req.session.room,
+                    playerList: playerList
+                });
             })
         }
     });
-
-    gameRouter.get('/', (req, res) => {
-        const {} = req.query
-        res.render('game');
-    });
-
     return gameRouter;
 };
 

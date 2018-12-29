@@ -1,0 +1,21 @@
+<div>
+  <form id="roll" action="/roll" method="post">
+    <button class="btn striped-shadow white"><span>Roll</span></button>
+  </form>
+  <form action="/action" method="post" id="action">
+    <button class="btn striped-shadow blue"><span>Action</span></button>
+  </form>
+  <form action="/rules" method="post" id="rules">
+    <button class="btn striped-shadow dark"><span>Rules</span></button>
+  </form>
+</div>
+<div id="roll-outcome">
+</div>
+
+<div id="player-list">
+    <ul>
+        <li *ngFor="let playerName of playerNames">
+          {{ playerName }}
+        </li>
+    </ul>
+</div>
