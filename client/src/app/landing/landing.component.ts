@@ -16,14 +16,12 @@ export class LandingComponent implements OnInit {
 
   }
 
-  public btnClick(value: string) {
+  public btnClickToHome(value: string) {
     this.stateService.typeOfGame = value;
     this.router.navigateByUrl('/home');
   }
 
   ngOnInit() {
-    // this.stateService.typeOfGame = '';
-
   }
 }
 

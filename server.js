@@ -9,17 +9,24 @@ if (process.env.NODE_ENV !== 'production') {
 const app = require('express')();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-// const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 const session = require('express-session');
+const cors = require('cors')
 
 // Import routes
-const gameRouter = require('./routes/game')(io);
+const gameRouter = require('./routes/game')();
 // const homeRouter = require('./routes/home')();
 // const rollRouter = require('./routes/roll')(io);
 
 // Models and DB
 const { db } = require('./models');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+// Cors Config
+const corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+  }
 
 // Middleware
 app.use(
@@ -35,10 +42,11 @@ app.use(
     })
 );
 
+app.use(cors(corsOptions))
+
 // Required for form parsing
-// app.use(bodyParser.urlencoded({
-//     extended: false
-// }))
+app.use(bodyParser.json())
+
 
 // Define where our static content lives
 // app.use(express.static(__dirname + '/public'));
@@ -47,7 +55,7 @@ app.use(
 // app.use(cookieParser())
 
 // Routes
-// app.use('/game', gameRouter);
+app.use('/game', gameRouter);
 // app.use('/home', homeRouter);
 // app.use('/roll', rollRouter);
 
@@ -82,7 +90,7 @@ io.sockets.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        io.sockets.in(socket.gameName).emit('player-leave', socket.playerName);
+        io.sockets.in(socket.gameName).emit('player-leave', { playerName: socket.playerName, gameName: socket.gameName } );
         socket.leave(socket.gameName)
     });
 });

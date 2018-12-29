@@ -1,18 +1,6 @@
-<!-- First page that opens is an option for new game or join game
-If you hit new game, you enter an game name and your game and it starts a game with socket connection
-When someone else comes along and hits join, they need to input their name and thegame they want to join
-When they hit join it registers them with that socket and 
-
-
-If you hit new game, you enter an game name and your game and it starts a game with socket connection
-
-
- -->
-
 <div id="form-main">
   <div id="form-div">
-
-    <form class="form" id="join" action="/game?join=true" method="post">
+    <form class="form" id="join">
       <p class="name">
         <input name="playerName" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input"
           placeholder="Your Name" id="name" />
@@ -24,9 +12,7 @@ If you hit new game, you enter an game name and your game and it starts a game w
       </p>
 
       <div class="submit">
-        <!-- <input type="submit" value="Join" id="button-blue" /> -->
-
-        <input type="submit" id="button-blue" value={{stateService.typeOfGame}}/>
+        <input type="submit" id="button-blue" value={{stateService.typeOfGame}} (click)="btnClickToGame()"/>
         <div class="ease"></div>
       </div>
     </form>
