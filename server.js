@@ -4,18 +4,18 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Core imports 
-const express = require('express');
-const cookieParser = require('cookie-parser')
+// const express = require('express');
+// const cookieParser = require('cookie-parser')
 const app = require('express')();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const session = require('express-session');
 
 // Import routes
 const gameRouter = require('./routes/game')(io);
-const homeRouter = require('./routes/home')();
-const rollRouter = require('./routes/roll')(io);
+// const homeRouter = require('./routes/home')();
+// const rollRouter = require('./routes/roll')(io);
 
 // Models and DB
 const { db } = require('./models');
@@ -36,28 +36,28 @@ app.use(
 );
 
 // Required for form parsing
-app.use(bodyParser.urlencoded({
-    extended: false
-}))
+// app.use(bodyParser.urlencoded({
+//     extended: false
+// }))
 
 // Define where our static content lives
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
 
 // Cookie parsing middleware
-app.use(cookieParser())
+// app.use(cookieParser())
 
 // Routes
-app.use('/game', gameRouter);
-app.use('/home', homeRouter);
-app.use('/roll', rollRouter);
+// app.use('/game', gameRouter);
+// app.use('/home', homeRouter);
+// app.use('/roll', rollRouter);
 
 // View Engine
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
 // Main route
-app.get('/', (req, res) => {
-    res.render('index');
-});
+// app.get('/', (req, res) => {
+//     res.render('index');
+// });
 
 // Db Sync and server listen
 db.sync()
