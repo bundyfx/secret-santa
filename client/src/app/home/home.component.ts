@@ -46,10 +46,8 @@ export class HomeComponent implements OnInit {
           $('#player-list ul').append($(`<li id=${data}>`).text(data));
       });
       socket.on('player-leave', (data) => {
-          console.log(`REMOVING! ${data.playerName}`);
           $(`#${data.playerName}`).remove();
           const gameInfo = new GameInfo(data.playerName, data.gameName);
-          console.log($(`#${data.playerName}`));
 
           this.requestService.postGameRequest(`http://localhost:3000/game?leave=true`, gameInfo)
           .subscribe(resp => {
