@@ -15,8 +15,9 @@ const cors = require('cors')
 
 // Import routes
 const gameRouter = require('./routes/game')();
+const rollRouter = require('./routes/roll')(io);
 // const homeRouter = require('./routes/home')();
-// const rollRouter = require('./routes/roll')(io);
+
 
 // Models and DB
 const { db } = require('./models');
@@ -56,8 +57,9 @@ app.use(bodyParser.json())
 
 // Routes
 app.use('/game', gameRouter);
+app.use('/roll', rollRouter);
 // app.use('/home', homeRouter);
-// app.use('/roll', rollRouter);
+
 
 // View Engine
 // app.set('view engine', 'ejs');

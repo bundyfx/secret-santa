@@ -4,8 +4,8 @@ const routes = (io) => {
     const rollRouter = express.Router();
 
     rollRouter.post('/', (req, res) => {
-        const room = req.session.room
-        io.sockets.in(room).emit('roll', getRandomInt(6));
+        const gameName = req.body.gameName
+        io.sockets.in(gameName).emit('roll', getRandomInt(6));
         res.status(200).end()
     })
 

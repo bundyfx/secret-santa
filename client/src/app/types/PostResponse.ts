@@ -3,6 +3,6 @@ export class PostResponse {
         this.gameName = gameName;
         this.playerList = playerList;
     }
-    playerList: string[];
-    gameName: string;
+    playerList?: string[];
+    gameName?: string;
 }

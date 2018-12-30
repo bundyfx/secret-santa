@@ -18,7 +18,9 @@ Once the Sequelize CLI is installed, ensure the `config/config.json` file has th
 
 Once the file is set as intended, you can create the DB you will use locally for this project by running `sequelize db:create` and then `sequelize db:migrate`
 
-After that, run `npm install && npm start` to install dependencies and start the application.
+After that, run `npm install && npm start` to install dependencies and start the server side component.
+
+To run the front-end Angular application install the angular CLI `npm install -g @angular/cli` navigate into the *client* folder run `npm install` and then `ng serve --open`
 
 ## Running the tests
 

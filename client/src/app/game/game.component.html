@@ -1,5 +1,5 @@
 <div>
-  <form id="roll" action="/roll" method="post">
+  <form id="roll" (click)="btnClickToRoll()">
     <button class="btn striped-shadow white"><span>Roll</span></button>
   </form>
   <form action="/action" method="post" id="action">
@@ -9,13 +9,15 @@
     <button class="btn striped-shadow dark"><span>Rules</span></button>
   </form>
 </div>
-<div id="roll-outcome">
+
+<div id="roll-outcome" class="roll-outcome">
+    <h1>{{ rollOutcome }}</h1>
 </div>
 
 <div id="player-list">
     <ul>
-        <li *ngFor="let playerName of playerNames">
-          {{ playerName }}
-        </li>
+          <li class="show" id="{{ playerName }}" *ngFor="let playerName of playerNames">
+              {{ playerName }}
+            </li>
     </ul>
 </div>

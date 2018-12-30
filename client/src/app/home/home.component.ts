@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { GameInfo } from '../types/GameInfo';
 import { RequestService } from '../request.service';
 import { PostResponse } from '../types/PostResponse';
+import { RollResponse } from '../types/Roll';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ import { PostResponse } from '../types/PostResponse';
 
 export class HomeComponent implements OnInit {
 
-  postResponse: PostResponse;
+  postResponse: PostResponse | RollResponse;
 
   constructor(public stateService: StateService, private router: Router, public requestService: RequestService) {
 
@@ -43,7 +44,10 @@ export class HomeComponent implements OnInit {
       });
       socket.on('player-join', (data) => {
           console.log(`${data} joined!`);
-          $('#player-list ul').append($(`<li id=${data}>`).text(data));
+          $('#player-list ul').append($(`<li _ngcontent-c3 id=${data}>`).text(data));
+          setTimeout(function() {
+            $(`#${data}`).toggleClass('show');
+          }, 10);
       });
       socket.on('player-leave', (data) => {
           $(`#${data.playerName}`).remove();
@@ -51,7 +55,7 @@ export class HomeComponent implements OnInit {
 
           this.requestService.postGameRequest(`http://localhost:3000/game?leave=true`, gameInfo)
           .subscribe(resp => {
-            this.postResponse = { ... resp.body };
+            this.postResponse = { ... resp.body } as PostResponse | RollResponse;
             this.stateService.playerNames = this.stateService.playerNames.filter(player => player !== data.playerName);
           });
           return false;
