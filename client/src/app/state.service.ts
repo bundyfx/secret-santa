@@ -4,10 +4,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StateService {
-  typeOfGame: string;
-  playerName: string;
+  typeOfGame: any;
+  playerName: any;
   playerNames: any;
-  gameName: string;
+  gameName: any;
+  currentPlayersTurn: string;
+  socket: any;
+  gameInProgress: boolean;
+  firstRoll: boolean;
 
   constructor() { }
 }

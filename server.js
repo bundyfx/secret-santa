@@ -4,8 +4,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Core imports 
-// const express = require('express');
-// const cookieParser = require('cookie-parser')
 const app = require('express')();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -16,11 +14,10 @@ const cors = require('cors')
 // Import routes
 const gameRouter = require('./routes/game')();
 const rollRouter = require('./routes/roll')(io);
-// const homeRouter = require('./routes/home')();
 
 
 // Models and DB
-const { db } = require('./models');
+const { db, Game } = require('./models');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // Cors Config
@@ -48,26 +45,10 @@ app.use(cors(corsOptions))
 // Required for form parsing
 app.use(bodyParser.json())
 
-
-// Define where our static content lives
-// app.use(express.static(__dirname + '/public'));
-
-// Cookie parsing middleware
-// app.use(cookieParser())
-
 // Routes
 app.use('/game', gameRouter);
 app.use('/roll', rollRouter);
-// app.use('/home', homeRouter);
 
-
-// View Engine
-// app.set('view engine', 'ejs');
-
-// Main route
-// app.get('/', (req, res) => {
-//     res.render('index');
-// });
 
 // Db Sync and server listen
 db.sync()
@@ -89,6 +70,17 @@ io.sockets.on('connection', (socket) => {
         console.log(`${socket.playerName} is joining the room`)
         socket.join(gameDetails.gameName);
         io.sockets.in(gameDetails.gameName).emit('player-join', socket.playerName);
+    });
+    socket.on('start-game', (gameDetails) => {
+        // Ask DB for list of all users in the game and send that back to be stored in state
+        Game.findAll({
+            where: {
+              name: gameDetails.gameName
+            }
+        }).then(data => {
+            const playerList = data.map(gameInfo => gameInfo.dataValues.players).pop()
+            io.sockets.in(socket.gameName).emit('start-game', { playerName: socket.playerName, playerList: playerList, gameName: socket.gameName});
+        })
     });
 
     socket.on('disconnect', () => {

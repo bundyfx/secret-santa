@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
       const socket = io.connect('http://localhost:3000');
 
       socket.on('connect', () => {
+          this.stateService.socket = socket;
           console.log(`signed up to get messages from ${jsonDetails.gameName}`);
           // Connected, let's sign-up for to receive messages for this room
           socket.emit('room', { gameName: jsonDetails.gameName, playerName: jsonDetails.playerName});
@@ -39,13 +40,22 @@ export class HomeComponent implements OnInit {
           });
       });
 
+      socket.on('start-game', (gameInfo: GameInfo) => {
+        $('#start').hide();
+        $('.player-turn').text(`${gameInfo.playerName} started the game!`);
+        this.stateService.playerNames = gameInfo.playerList;
+      });
+      socket.on('players-turn', (data) => {
+        console.log(data);
+        $('.player-turn').text(`${data}'s turn`);
+      });
       socket.on('roll', (data) => {
           $('#roll-outcome').text(data);
       });
       socket.on('player-join', (data) => {
           console.log(`${data} joined!`);
-          $('#player-list ul').append($(`<li _ngcontent-c3 id=${data}>`).text(data));
-          setTimeout(function() {
+          $('#player-list ul').append($(`<li id=${data}>`).text(data));
+          setTimeout(() => {
             $(`#${data}`).toggleClass('show');
           }, 10);
       });

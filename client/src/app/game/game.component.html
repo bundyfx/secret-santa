@@ -1,12 +1,22 @@
 <div>
+    <h1 class="game-name">{{ gameName }}</h1>
+</div>
+<div>
+    <h2 class="player-turn"></h2>
+</div>
+
+<div>
   <form id="roll" (click)="btnClickToRoll()">
     <button class="btn striped-shadow white"><span>Roll</span></button>
   </form>
-  <form action="/action" method="post" id="action">
+  <form id="action" (click)="btnClickToAction()">
     <button class="btn striped-shadow blue"><span>Action</span></button>
   </form>
-  <form action="/rules" method="post" id="rules">
+  <form id="rules" (click)="btnClickToRules()">
     <button class="btn striped-shadow dark"><span>Rules</span></button>
+  </form>
+  <form id="start" (click)="btnClickToStart()">
+    <button class="btn striped-shadow red"><span>Start</span></button>
   </form>
 </div>
 

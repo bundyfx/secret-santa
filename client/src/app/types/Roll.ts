@@ -6,8 +6,14 @@ export class RollResponse {
 }
 
 export class RollRequest {
-    constructor(gameName: string) {
+    constructor(gameName: string, playerName: string, playerList: string[], firstRoll: boolean) {
         this.gameName = gameName;
+        this.playerName = playerName;
+        this.playerList = playerList;
+        this.firstRoll = firstRoll;
     }
     gameName: string;
+    playerName: string;
+    playerList: string[];
+    firstRoll: boolean;
 }

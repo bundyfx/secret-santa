@@ -34,6 +34,11 @@ button {
   background: #77bfa1;
 }
 
+.btn.striped-shadow.red span {
+  border-color: rgb(249, 3, 3);
+  background: #77bfa1;
+  color: rgb(249, 3, 3);
+}
 .btn.striped-shadow.blue span {
   border-color: #4183D7;
   background: #77bfa1;
@@ -80,6 +85,18 @@ button.btn.striped-shadow.white:after, button.btn.striped-shadow.white:before {
     transparent 10px
   );
 }
+
+button.btn.striped-shadow.red:after, button.btn.striped-shadow.red:before {
+  background-image: linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 5px,
+    rgb(255, 0, 0) 5px,
+    rgb(255, 0, 0) 10px,
+    transparent 10px
+  );
+}
+
 
 button.btn.striped-shadow.blue:after, button.btn.striped-shadow.blue:before {
   background-image: linear-gradient(
